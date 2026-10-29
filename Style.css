@@ -1,0 +1,780 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Dark mode — default theme */
+:root {
+  --bg-primary: #0f111a;
+  --bg-card: #191d2b;
+
+  --text-primary: #f5f7ff;
+  --text-primary2: #f5f7ff;
+  --text-secondary: #a5adc5;
+  --text-secondary2: #a5adc5;
+
+  --primary: #8b5cf6;
+  --primary-hover: #7c3aed;
+
+  --success: #34d399;
+  --border: #2b3042;
+  --gap: 24px;
+}
+
+/* Light mode */
+body.light-mode {
+  --bg-primary: #f5f7ff;
+  --bg-card: #ffffff;
+
+  --text-primary: #18233d;
+  --text-primary2: #ffffff;
+  --text-secondary: #7180a2;
+  --text-secondary2: #ffffff;
+
+  --primary: #8b5cf6;
+  --primary-hover: #7c3aed;
+
+  --success: #059669;
+  --border: #e0e6f2;
+  --gap: 24px;
+}
+
+body {
+  height: 100vh;
+  padding: 24px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+}
+
+/* Page: header on top, main fills the rest */
+.app {
+  height: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: var(--gap);
+}
+
+/* Main: narrow left column, wide right column */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: var(--gap);
+  min-height: 0;
+}
+
+/* Each column stacks its two sections */
+.column {
+  display: grid;
+  gap: var(--gap);
+  min-height: 0;
+}
+
+.column-left {
+  grid-template-rows: 1fr 1fr;
+}
+
+.column-right {
+  grid-template-rows: 5fr 2fr; /* big timer, shorter history */
+}
+
+/* Simple border on every container */
+.header,
+.setup,
+.progress,
+.timer,
+.history {
+  border: 1px solid var(--border);
+  background-color: var(--bg-card);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  border-radius: 20px;
+  padding: clamp(0.5rem, 1.2vw, 0.65rem) 1rem;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.logo-section svg {
+  width: clamp(40px, 3.2vw, 70px);
+  height: clamp(40px, 3.2vw, 70px);
+  color: var(--primary);
+}
+
+.logo-section h3 {
+  color: var(--text-primary);
+  font-size: clamp(1.1rem, 0.9rem + 1vw, 1.5rem);
+}
+
+.logo-section p {
+  font-size: clamp(0.65rem, 0.55rem + 0.5vw, 0.8rem);
+  color: var(--text-secondary);
+}
+
+.logo-section h3 span {
+  color: var(--primary);
+}
+
+.color-change div {
+  background-color: transparent;
+  border: 1px solid var(--border);
+  width: clamp(20px, 2vw, 25px);
+  height: clamp(20px, 2vw, 25px);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: calc(clamp(20px, 2vw, 25px) + 14px);
+  transition: all 0.2s ease;
+}
+
+.color-change div.active {
+  left: 5px;
+}
+
+.color-change {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  border: 1px solid var(--border);
+  padding: 0.3rem;
+  border-radius: 20px;
+  position: relative;
+}
+
+.color-change svg {
+  width: clamp(20px, 2vw, 25px);
+  height: clamp(20px, 2vw, 25px);
+  transform: scale(0.7);
+}
+
+/* SETUP */
+.setup,
+.progress,
+.history {
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 20px;
+}
+
+.setup .input svg {
+  width: 15px;
+  height: 15px;
+  fill: var(--text-primary);
+}
+
+.setup .input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border);
+  padding: clamp(9px, 0.7vw, 13px);
+  border-radius: 10px;
+  gap: 0.5rem;
+}
+
+.setup .input div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.input small {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.input input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--text-primary);
+}
+
+.input input::placeholder {
+  color: var(--text-secondary);
+  opacity: 1;
+}
+
+.startBtn svg {
+  width: 22px;
+  height: 22px;
+  fill: var(--text-primary2);
+}
+
+.startBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  border: 1px solid var(--border);
+  padding: 0.6rem;
+  border-radius: 15px;
+  background-color: var(--primary);
+  font-size: clamp(14px, 1vw 19px);
+  cursor: pointer;
+}
+
+.optionsTab {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.optionsTab p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.box,
+.infinite {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.8rem;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.box:hover,
+.infinite:hover {
+  background-color: var(--primary-hover);
+  color: var(--text-secondary2);
+}
+.box:hover.box p,
+.infinite:hover.infinite p {
+  color: var(--text-secondary2);
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.goalProgress {
+  border: 1px solid var(--border);
+  padding: 0.8rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.goalProgress .top div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.goalProgress .top svg {
+  color: var(--primary);
+  width: 20px;
+}
+
+.goalProgress .top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.goalProgress .top small {
+  color: var(--text-secondary);
+}
+
+.goalProgress p {
+  padding-left: 2rem;
+  font-size: 0.9rem;
+}
+
+.goalProgress .loading {
+  height: 12px;
+  width: 100%;
+  background-color: var(--border);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.goalProgress .load {
+  position: absolute;
+  height: 100%;
+  background-color: var(--primary);
+  width: 0%;
+  border-radius: inherit;
+}
+
+h4 {
+  font-size: clamp(0.95rem, 0.8rem + 0.4vw, 1.1rem);
+}
+
+/* TIMER SECTION */
+
+.timer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  border-radius: 20px;
+  flex-wrap: wrap;
+}
+.timer {
+  container-type: inline-size;
+}
+
+.timer-circle {
+  width: clamp(200px, 40cqi, 300px);
+}
+
+/* CIRCULAR PROGRESS RING */
+.timer-circle {
+  width: clamp(180px, 20vw, 250px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+
+  background: conic-gradient(var(--primary) 0% 0%, var(--border) 0% 100%);
+
+  display: grid;
+  place-items: center;
+}
+
+/* INNER CIRCLE */
+.timer-content {
+  width: 88%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--bg-primary);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.timer-label {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+}
+
+.timer-content h1 {
+  font-size: 2.7rem;
+  color: var(--text-primary);
+}
+
+.timer-status {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* BUTTONS */
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.timer-controls button {
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: clamp(0.5rem, 1vw, 0.7rem) clamp(1.2rem, 2.5vw, 2rem);
+  background-color: var(--primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.3rem, 0.6vw, 0.5rem);
+
+  color: var(--text-primary);
+}
+
+.timer-controls button:nth-child(odd) {
+  background: var(--bg-card);
+}
+
+.timer-controls button svg {
+  fill: var(--text-primary);
+  width: clamp(15px, 1.6vw, 20px);
+}
+
+.timer-controls button:hover {
+  background: var(--primary-hover);
+  color: var(--text-secondary2);
+}
+
+.timer-quote {
+  color: var(--text-secondary);
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.timer-content svg {
+  transform: scale(1.7);
+  color: var(--primary);
+}
+
+/* RESPONSIVE */
+@media (max-width: 500px) {
+  .timer-circle {
+    width: min(280px, 75vw);
+  }
+
+  .timer-content h1 {
+    font-size: 2.3rem;
+  }
+}
+
+.loadingProgress {
+  width: 130px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+
+  background: conic-gradient(var(--primary) 0% 0%, var(--border) 0% 100%);
+
+  display: grid;
+  place-items: center;
+}
+
+.progressBar {
+  width: 88%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--bg-primary);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.progressBar p {
+  color: var(--text-secondary);
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.display .card svg {
+  width: 18px;
+}
+
+.clearSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+}
+
+.clearSection small {
+  color: var(--primary-hover);
+}
+
+.display .card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.8rem;
+}
+
+.display .card div {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.card div svg {
+  fill: var(--primary);
+  transform: scale(1.2);
+}
+
+.card svg:last-child {
+  fill: var(--success);
+}
+
+.display {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.5rem;
+  height: 250px;
+  overflow: auto;
+}
+
+.clearSection div:first-child svg {
+  width: clamp(15px, 1.6vw, 20px);
+  fill: var(--text-primary);
+}
+
+.clearSection div {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 0.5vw, 15px);
+}
+
+.clearSection div:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  border-radius: 20px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.clearSection div:nth-child(2) svg {
+  fill: var(--primary-hover);
+  width: 15px;
+}
+
+.card div:last-child svg:first-child {
+  fill: var(--success);
+}
+
+.card:hover.card div:last-child svg:first-child {
+  display: none;
+}
+
+.card div:last-child svg:last-child {
+  display: none;
+}
+
+.card:hover.card div:last-child svg:last-child {
+  display: block;
+  fill: var(--primary);
+}
+
+.history {
+  position: relative;
+}
+
+.noSessions {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.1rem;
+  display: none;
+}
+
+.noSessions.active {
+  display: flex;
+}
+
+.noSessions svg:first-child {
+  width: clamp(70px, 9vw, 110px);
+  fill: var(--border);
+}
+
+.noSessions svg:last-child {
+  width: calc(clamp(70px, 9vw, 110px) * 0.41);
+  fill: var(--primary);
+  position: absolute;
+  top: calc(clamp(70px, 9vw, 110px) * 0.55);
+  left: calc(clamp(70px, 9vw, 110px) * 0.59);
+}
+
+.noSessions h2 {
+  font-size: clamp(0.9rem, 0.6rem + 0.8vw, 1.2rem);
+}
+
+.noSessions p {
+  color: var(--text-secondary);
+  font-size: clamp(0.6rem, 0.4rem + 0.7vw, 0.9rem);
+  text-align: center;
+}
+
+.noSessions .images {
+  position: relative;
+}
+
+/* Custom scrollbar for session history */
+.display {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--bg-card);
+  overflow-x: hidden;
+}
+
+/* Chrome, Edge, Safari */
+.display::-webkit-scrollbar {
+  width: 6px;
+}
+
+.display::-webkit-scrollbar-track {
+  background: var(--bg-card);
+  border-radius: 10px;
+}
+
+.display::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 10px;
+}
+
+.display::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+/* LIGHT MODE — Start button */
+body.light-mode .startBtn {
+  color: #ffffff;
+  background-color: var(--primary);
+}
+
+body.light-mode .startBtn p,
+body.light-mode .startBtn svg {
+  color: #ffffff;
+  fill: #ffffff;
+}
+
+/* LIGHT MODE — Timer controls */
+body.light-mode .timer-controls button {
+  color: var(--text-primary);
+}
+
+/* Reset and Stop: light background, dark text */
+body.light-mode .timer-controls button:nth-child(odd) {
+  background-color: #ffffff;
+  color: var(--text-primary);
+}
+
+body.light-mode .timer-controls button:nth-child(odd) svg {
+  fill: var(--text-primary);
+}
+
+/* Pause: purple background, white text */
+body.light-mode .timer-controls button:nth-child(even) {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+body.light-mode .timer-controls button:nth-child(even) svg {
+  fill: #ffffff;
+}
+
+/* Hover effect */
+body.light-mode .timer-controls button:hover,
+body.light-mode .startBtn:hover {
+  background-color: var(--primary-hover);
+  color: #ffffff;
+}
+
+body.light-mode .timer-controls button:hover svg {
+  fill: #ffffff;
+}
+
+/* Clear All button hover effect */
+.clearSection div:nth-child(2) {
+  transition: all 0.3s ease;
+}
+
+.clearSection div:nth-child(2):hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.clearSection div:nth-child(2):hover small {
+  color: #ffffff;
+}
+
+.clearSection div:nth-child(2):hover svg {
+  fill: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .column {
+    display: contents; /* cards now sit directly in .layout's grid */
+  }
+
+  .timer {
+    order: 1;
+    grid-column: 1 / -1; /* full width */
+  }
+
+  .setup {
+    order: 2;
+  }
+  .progress {
+    order: 3;
+  }
+
+  .history {
+    order: 4;
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .layout {
+    grid-template-columns: 1fr; /* everything stacks */
+  }
+  .timer-controls {
+    flex-direction: row;
+  }
+}
